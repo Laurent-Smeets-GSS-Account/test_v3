@@ -8,8 +8,7 @@ This section provides guidelines for structuring analytical notebooks to enhance
 
 ## test 2
 
-<div class="flourish-embed flourish-chart" data-src="visualisation/21863752?2455648" data-height="800px"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/21863752/thumbnail" width="100%" height="800px" alt="chart visualization" /></noscript></div>
-
+<div class="flourish-embed flourish-chart" data-src="visualisation/21864340?2455648" data-height="800px"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/21864340/thumbnail" width="100%" height="800px" alt="chart visualization" /></noscript></div>
 
 ## test 3
 <div class="flourish-embed flourish-chart" data-src="visualisation/21865104?2455648" data-height="800px"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/21865104/thumbnail" width="100%" height="800px" alt="chart visualization" /></noscript></div>
