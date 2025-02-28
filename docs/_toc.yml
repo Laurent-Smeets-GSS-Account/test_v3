@@ -4,7 +4,7 @@ root: index
 parts:
   - caption: Recommended Workflows
     chapters:
-      - file: docs/folders-and-naming
+      - file: docs/regional food insecurity
       - file: docs/git-workflows
       - file: docs/notebooks-workflows
       - file: docs/presenting-results
