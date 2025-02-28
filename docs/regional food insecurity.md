@@ -13,3 +13,6 @@ This section provides guidelines for structuring analytical notebooks to enhance
 ## test 3
 <div class="flourish-embed flourish-chart" data-src="visualisation/21865104?2455648" data-height="800px"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/21865104/thumbnail" width="100%" height="800px" alt="chart visualization" /></noscript></div>
 
+
+## test 4
+<div class="flourish-embed flourish-radar" data-src="visualisation/21867590?2455648" data-height="1000px"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/21867590/thumbnail" width="100%" height="1000px" alt="radar visualization" /></noscript></div>
