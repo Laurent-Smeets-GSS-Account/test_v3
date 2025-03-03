@@ -4,8 +4,6 @@ root: index
 parts:
   - caption: Recommended Workflows
     chapters:
-      - file: docs/regional food insecurity
-      - file: docs/Food_insecuity
       - file: docs/test-food-security
       - file: docs/notebooks-workflows
       - file: docs/presenting-results
