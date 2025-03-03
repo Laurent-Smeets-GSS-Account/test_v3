@@ -24,3 +24,14 @@ data-src="visualisation/21862009?2455648" data-height="1000px">
 </noscript>
 
 </div>
+
+
+### Distribution of number of FIES deprivations
+
+Indonesia’s FIES deprivation data reveals 63.4% of the population
+experiences zero food insecurity indicators, with percentages steadily
+declining as severity increases—12.9% face one deprivation, 5.7% face
+two, and only 1.8% of Indonesians experience all eight FIES
+deprivations, demonstrating that food insecurity follows a clear
+gradient with most citizens experiencing either none or few food
+challenges.
