@@ -6,6 +6,7 @@ parts:
     chapters:
       - file: docs/regional food insecurity
       - file: docs/Food_insecuity
+      - file: docs/test-food-security.md
       - file: docs/notebooks-workflows
       - file: docs/presenting-results
   - caption: Gallery
