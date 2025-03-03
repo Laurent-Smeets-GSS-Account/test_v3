@@ -35,31 +35,86 @@ two, and only 1.8% of Indonesians experience all eight FIES
 deprivations, demonstrating that food insecurity follows a clear
 gradient with most citizens experiencing either none or few food
 challenges.
+<div class="custom-tabs">
+  <div class="custom-tabs-nav">
+    <button class="custom-tab-btn active" onclick="showTab(this, 'tab1')">Step chart</button>
+    <button class="custom-tab-btn" onclick="showTab(this, 'tab2')">Area chart by count</button>
+  </div>
 
-<div class="panel-tabset">
+  <div id="tab1" class="custom-tab-content active">
+    <div class="flourish-embed flourish-chart" data-src="visualisation/21864340?2455648" data-height="800px">
+      <script src="https://public.flourish.studio/resources/embed.js"></script>
+      <noscript>
+        <img src="https://public.flourish.studio/visualisation/21864340/thumbnail" width="100%" height="800px" alt="chart visualization" />
+      </noscript>
+    </div>
+  </div>
 
-## Step chart
-
-<div class="flourish-embed flourish-chart"
-data-src="visualisation/21864340?2455648" data-height="800px">
-
-<script src="https://public.flourish.studio/resources/embed.js"></script>
-<noscript>
-<img src="https://public.flourish.studio/visualisation/21864340/thumbnail" width="100%" height="800px" alt="chart visualization" />
-</noscript>
-
+  <div id="tab2" class="custom-tab-content">
+    <div class="flourish-embed flourish-chart" data-src="visualisation/21865104?2455648" data-height="800px">
+      <script src="https://public.flourish.studio/resources/embed.js"></script>
+      <noscript>
+        <img src="https://public.flourish.studio/visualisation/21865104/thumbnail" width="100%" height="800px" alt="chart visualization" />
+      </noscript>
+    </div>
+  </div>
 </div>
 
-## Area chart by count
+<style>
+.custom-tabs {
+  margin: 20px 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.custom-tabs-nav {
+  display: flex;
+  border-bottom: 1px solid #dee2e6;
+  margin-bottom: 15px;
+}
+.custom-tab-btn {
+  padding: 8px 16px;
+  background: none;
+  border: 1px solid transparent;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  cursor: pointer;
+  margin-bottom: -1px;
+  font-size: 16px;
+  color: #495057;
+}
+.custom-tab-btn:hover {
+  border-color: #e9ecef #e9ecef #dee2e6;
+  color: #0d6efd;
+}
+.custom-tab-btn.active {
+  color: #0d6efd;
+  background-color: #fff;
+  border-color: #dee2e6 #dee2e6 #fff;
+  font-weight: 500;
+}
+.custom-tab-content {
+  display: none;
+}
+.custom-tab-content.active {
+  display: block;
+}
+</style>
 
-<div class="flourish-embed flourish-chart"
-data-src="visualisation/21865104?2455648" data-height="800px">
-
-<script src="https://public.flourish.studio/resources/embed.js"></script>
-<noscript>
-<img src="https://public.flourish.studio/visualisation/21865104/thumbnail" width="100%" height="800px" alt="chart visualization" />
-</noscript>
-
-</div>
-
-</div>
+<script>
+function showTab(button, tabId) {
+  // Hide all tab contents
+  var contents = document.getElementsByClassName('custom-tab-content');
+  for (var i = 0; i < contents.length; i++) {
+    contents[i].classList.remove('active');
+  }
+  
+  // Deactivate all buttons
+  var buttons = document.getElementsByClassName('custom-tab-btn');
+  for (var i = 0; i < buttons.length; i++) {
+    buttons[i].classList.remove('active');
+  }
+  
+  // Activate the clicked button and show the corresponding tab
+  button.classList.add('active');
+  document.getElementById(tabId).classList.add('active');
+}
+</script>
