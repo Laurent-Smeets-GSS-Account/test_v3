@@ -60,6 +60,43 @@ challenges.
   </div>
 </div>
 
+
+
+### Regional comparison for latest month
+
+Regional food insecurity patterns across Indonesia’s major islands
+display distinct variations, with Nusa Tenggara and Maluku showing
+larger footprints suggesting more severe challenges, while Kalimantan
+and Papua exhibit more compact profiles indicating potentially fewer or
+less intense food security issues across measured dimensions.
+
+<div class="flourish-embed flourish-radar"
+data-src="visualisation/21867590?2455648" data-height="1000px">
+
+<script src="https://public.flourish.studio/resources/embed.js"></script>
+<noscript>
+<img src="https://public.flourish.studio/visualisation/21867590/thumbnail" width="100%" height="1000px" alt="radar visualization" />
+</noscript>
+
+</div>
+
+# Relationship between Inflation and Food Insecurity
+
+Analysis of Indonesian household data reveals a significant correlation
+between rising food prices (Inflation) and increased FIES indicators,
+both within and between regions
+
+<div class="flourish-embed flourish-scatter"
+data-src="visualisation/21876147?2455648" data-height="1000px">
+
+<script src="https://public.flourish.studio/resources/embed.js"></script>
+<noscript>
+<img src="https://public.flourish.studio/visualisation/21876147/thumbnail" width="100%" height="1000px" alt="scatter visualization" />
+</noscript>
+
+</div>
+
+
 <style>
 .custom-tabs {
   margin: 20px 0;
