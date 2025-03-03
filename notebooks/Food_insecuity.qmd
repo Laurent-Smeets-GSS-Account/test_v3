@@ -1,0 +1,273 @@
+---
+title: "Untitled"
+format: gfm
+editor: source
+code-copy: true
+prefer-html: true
+fig-dpi: 300
+code-overflow: wrap
+echo: false
+eval: true
+message: false
+warning: false
+---
+```{r}
+# https://quarto.org/docs/reference/formats/markdown/gfm.html
+country_name <- "Indonesia"
+current_date <- "2025M01"
+
+source("src/packages.R")
+source("src/food_security_function.R")
+source("src/food_security_function_distribution.R")
+source("src/food_security_function_CPI.R")
+source("src/data_cleaning.R")
+source("src/push_to_google_sheet_function.R")
+source("src/regression_model_functions.R")
+```
+
+```{r}
+path_to_individual_level_data <- "C:\\Users\\laure\\Downloads\\OneDrive_2025-02-27\\L2Indo Team Folder\\Team Data\\Anon_IND_L2Indo_Analysisfile.dta"
+path_to_hh_level_data <- "C:\\Users\\laure\\Downloads\\OneDrive_2025-02-27\\L2Indo Team Folder\\Team Data\\Anon_HH_L2Indo_Analysisfile.dta"
+
+
+
+
+individual_level_data_from_stata <- haven::read_dta(path_to_individual_level_data)
+hh_level_data_from_stata <- haven::read_dta(path_to_hh_level_data)
+
+
+individual_level_data_clean <- individual_level_data_from_stata
+
+
+individual_level_data_clean <- individual_level_data_clean%>%
+  filter(!is.na(indw))
+
+hh_level_data_clean <- hh_level_data_from_stata%>%
+  filter(!is.na(indw))
+
+hh_level_data_clean <-food_security_prep(hh_level_data_clean)
+
+
+individual_level_data_clean <- individual_level_data_clean%>%
+  mutate(
+    # Convert mofd to an actual date (first day of the month)
+    date = as.Date("1960-01-01") %m+% months(mofd),
+    # Create a formatted year-month column
+    month_year = format(date, "%Y-%m"),
+    # Create a more readable format like "2024m3"
+    mofd_label = format(date, "%Ym%m")
+  )
+
+
+
+# Apply weighted quintiles to create loc_cost_quint
+hh_level_data_clean <- hh_level_data_clean %>%
+  dplyr::mutate(
+    loc_cost_quint = stata_weighted_ntile(pdef3, popw, 5)
+  )
+
+```
+
+
+```{r}
+# Define food insecurity variables
+# Define food insecurity variables
+food_insec <- c(
+  "worried", "unhealthy", "low_diversity", "skip_meal",
+  "eat_less", "ran_out", "went_hungry", "whole_day", "totfoodinsec"
+)
+
+# Run models
+linear_models <- run_linear_models(hh_level_data_clean, food_insec)
+logit_models <- run_logit_models(hh_level_data_clean, food_insec)
+fe_models <- run_fe_models(hh_level_data_clean, food_insec)
+
+# Create interactive HTML tables
+#summarize_linear_models(linear_models, food_insec)
+```
+
+# Summary of Food Inscurity 
+
+
+### Fies Indicators over time
+
+This chart displays the levels of food insecurity in Indonesia from March 2024 to January 2025, highlighting a general downward trend across all FIES (Food Insecurity Experience Scale) indicators, with milder concerns like "worried about not having enough food" (29.8%) remaining most prevalent, while severe experiences such as "went without eating for a whole day" (2.3%) affected the smallest portion of the population.
+
+
+<div class="flourish-embed flourish-chart" data-src="visualisation/21862009?2455648" data-height="1000px"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/21862009/thumbnail" width="100%" height="1000px" alt="chart visualization" /></noscript></div>
+
+
+### Distribution of number of FIES deprivations
+
+Indonesia’s FIES deprivation data reveals 63.4% of the population experiences zero food insecurity indicators, with percentages steadily declining as severity increases—12.9% face one deprivation, 5.7% face two, and only 1.8% of Indonesians experience all eight FIES deprivations, demonstrating that food insecurity follows a clear gradient with most citizens experiencing either none or few food challenges.
+
+
+
+
+::: {.panel-tabset}
+
+## Step chart 
+
+<div class="flourish-embed flourish-chart" data-src="visualisation/21864340?2455648" data-height="800px"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/21864340/thumbnail" width="100%" height="800px" alt="chart visualization" /></noscript></div>
+
+## Area chart by count
+
+<div class="flourish-embed flourish-chart" data-src="visualisation/21865104?2455648" data-height="800px"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/21865104/thumbnail" width="100%" height="800px" alt="chart visualization" /></noscript></div>
+
+:::
+
+
+### Regional comparison for latest month
+
+
+Regional food insecurity patterns across Indonesia's major islands display distinct variations, with Nusa Tenggara and Maluku showing larger footprints suggesting more severe challenges, while Kalimantan and Papua exhibit more compact profiles indicating potentially fewer or less intense food security issues across measured dimensions.
+
+<div class="flourish-embed flourish-radar" data-src="visualisation/21867590?2455648" data-height="1000px"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/21867590/thumbnail" width="100%" height="1000px" alt="radar visualization" /></noscript></div>
+
+
+
+
+
+# Relationship between Inflation and Food Insecurity
+
+
+Analysis of Indonesian household data reveals a significant correlation between rising food prices (Inflation) and increased FIES indicators, both within and between regions
+
+
+<div class="flourish-embed flourish-scatter" data-src="visualisation/21876147?2455648" data-height="1000px"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/21876147/thumbnail" width="100%" height="1000px" alt="scatter visualization" /></noscript></div>
+
+#### Model Summary
+
+
+
+#### tables
+::: {.panel-tabset}
+
+## Linear model
+```{r}
+create_fe_linear_summary(fe_models, food_insec)
+```
+
+## Logit model
+```{r}
+create_fe_logit_summary_final(fe_models, food_insec)
+```
+
+:::
+
+
+
+# Relationship between Inflation and Income 
+
+These regression models show the relationship between income and the different FIES components, revealing how economic factors such as household income, local food costs, and agricultural participation influence various dimensions of food insecurity. The analysis examines eight distinct food insecurity indicators—from worrying about food to going whole days without eating—and explores how these experiences vary across income quintiles and local food cost distributions. By regressing each food insecurity measure against per capita income, local food prices, and agricultural household status, we can identify which economic factors most strongly predict different manifestations of food insecurity in Indonesia.
+
+
+#### Model Summary
+
+$$
+\begin{align}
+\text{Model 1: } & y_i = \beta_0 + \beta_1 \text{pdef3}_i + \varepsilon_i \\
+\text{Model 2: } & y_i = \beta_0 + \sum_{j=1}^{4} \beta_j \mathbb{1}(\text{loc\_cost\_quint}_i = j+1) + \varepsilon_i \\
+\text{Model 3: } & y_i = \beta_0 + \beta_1 \text{ln\_pc\_def\_inc}_i + \beta_2 \text{pdef3}_i + \varepsilon_i \\
+\text{Model 4: } & y_i = \beta_0 + \beta_1 \text{hhag}_i + \beta_2 \text{ln\_pc\_def\_inc}_i + \beta_3 \text{pdef3}_i + \varepsilon_i\\
+\text{Model 5a: } & \log\left(\frac{P(y_i=1)}{1-P(y_i=1)}\right) = \beta_0 + \beta_1 \text{ln\_pc\_def\_inc}_i + \beta_2 \text{pdef3}_i \\
+\text{Model 5b: } & \log(E(y_i)) = \beta_0 + \beta_1 \text{ln\_pc\_def\_inc}_i + \beta_2 \text{pdef3}_i
+\end{align}
+$$
+
+
+$$\text{where } y_i \text{ represents household-level FIES (Food Insecurity Experience Scale) outcomes}$$
+$$\text{Model 5a is used for binary outcomes and Model 5b for count data (when totfoodinsec > 1)}$$
+
+#### Coefficient Definitions:
+
+$$
+\begin{align}
+\text{Model 1: } & \beta_0 = \text{Constant} \\
+& \beta_1 = \text{Spatial deflator} \\
+\\
+\text{Model 2: } & \beta_0 = \text{Constant} \\
+& \beta_1 = \text{Location cost quintile 2} \\
+& \beta_2 = \text{Location cost quintile 3} \\
+& \beta_3 = \text{Location cost quintile 4} \\
+& \beta_4 = \text{Location cost quintile 5} \\
+\\
+\text{Model 3: } & \beta_0 = \text{Constant} \\
+& \beta_1 = \text{Log per-capita income} \\
+& \beta_2 = \text{Spatial deflator} \\
+\\
+\text{Model 4: } & \beta_0 = \text{Constant} \\
+& \beta_1 = \text{Agricultural household} \\
+& \beta_2 = \text{Log per-capita income} \\
+& \beta_3 = \text{Spatial deflator} \\
+\\
+\text{Model 5a/5b: } & \beta_0 = \text{Constant} \\
+& \beta_1 = \text{Log per-capita income} \\
+& \beta_2 = \text{Spatial deflator}
+\end{align}
+$$
+$$\text{Note: All models are weighted using population weights (popw) to ensure representativeness.}$$
+$$\text{All models use heteroskedasticity-consistent standard errors}$$
+
+
+
+
+
+#### tables
+::: {.panel-tabset}
+
+## model 1
+```{r}
+create_comparative_table(linear_models = linear_models, outcome_vars = food_insec, model_num = "m1")
+```
+## model 2
+```{r}
+create_comparative_table(linear_models = linear_models, outcome_vars = food_insec, model_num = "m2")
+```
+## model 3
+```{r}
+create_comparative_table(linear_models = linear_models, outcome_vars = food_insec, model_num = "m3")
+```
+## model 4
+```{r}
+create_comparative_table(linear_models = linear_models, outcome_vars = food_insec, model_num = "m4")
+```
+## model 5
+
+```{r}
+create_logit_summary_table(logit_models, food_insec)
+```
+:::
+
+
+```{r}
+coef_plot <- create_coef_plots(linear_models, food_insec)
+logit_results <- extract_logit_results(logit_models)
+
+coef_plot_2 <- create_effect_plot(logit_results)
+
+```
+
+#### Figure comparing coefficient different models 
+::: {.panel-tabset}
+
+## linear models
+```{r}
+#| fig-height: 15
+#| fig-width: 10
+
+coef_plot
+
+```
+## logit models
+```{r}
+#| fig-height: 15
+#| fig-width: 10
+
+coef_plot_2
+
+```
+
+:::
+
+

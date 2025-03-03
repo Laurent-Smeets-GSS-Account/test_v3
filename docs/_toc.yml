@@ -5,7 +5,7 @@ parts:
   - caption: Recommended Workflows
     chapters:
       - file: docs/regional food insecurity
-      - file: docs/git-workflows
+      - file: docs/Food_insecuity
       - file: docs/notebooks-workflows
       - file: docs/presenting-results
   - caption: Gallery
