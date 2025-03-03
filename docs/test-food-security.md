@@ -35,3 +35,31 @@ two, and only 1.8% of Indonesians experience all eight FIES
 deprivations, demonstrating that food insecurity follows a clear
 gradient with most citizens experiencing either none or few food
 challenges.
+
+<div class="panel-tabset">
+
+## Step chart
+
+<div class="flourish-embed flourish-chart"
+data-src="visualisation/21864340?2455648" data-height="800px">
+
+<script src="https://public.flourish.studio/resources/embed.js"></script>
+<noscript>
+<img src="https://public.flourish.studio/visualisation/21864340/thumbnail" width="100%" height="800px" alt="chart visualization" />
+</noscript>
+
+</div>
+
+## Area chart by count
+
+<div class="flourish-embed flourish-chart"
+data-src="visualisation/21865104?2455648" data-height="800px">
+
+<script src="https://public.flourish.studio/resources/embed.js"></script>
+<noscript>
+<img src="https://public.flourish.studio/visualisation/21865104/thumbnail" width="100%" height="800px" alt="chart visualization" />
+</noscript>
+
+</div>
+
+</div>
